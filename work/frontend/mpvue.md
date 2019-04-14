@@ -12,4 +12,4 @@
 
 * mpvue 大体框架
 
-![avatar](../images/general.png)
+![概览](https://github.com/cqiangcode/afteryunfutech/blob/master/images/general.png)
