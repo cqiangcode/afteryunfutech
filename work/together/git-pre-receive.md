@@ -11,3 +11,4 @@
   # 项目自定义 git hooks
   $ touch /var/opt/gitlab/git-data/repositories/<GROUP>/<username>.git/custom_hooks/pre-receive
 ```
+2. 
