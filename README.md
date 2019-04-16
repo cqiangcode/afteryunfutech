@@ -5,3 +5,5 @@
 [mpvue基本东西](https://github.com/cqiangcode/afteryunfutech/blob/master/work/frontend/mpvue.md)
 
 [git-hooks](https://github.com/cqiangcode/afteryunfutech/blob/master/work/together/git-pre-receive.md)
+
+[css-module](https://github.com/cqiangcode/afteryunfutech/blob/master/work/frontend/css.md)
