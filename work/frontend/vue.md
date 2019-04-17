@@ -1,10 +1,24 @@
 # vue 开发过程中遇到的问题
 
-1. v-for 和 v-model 的问题 | 原因暂时不了解
+1. v-for 和 v-model 的问题
+
+* v-for中事件触发传递参数可以传递 $event 
+* v-for中指定 key 是因为虚拟 dom 的 diff 算法，未完待续
 
 ```html
-  <!- 若 v-model 直接写 app 会产生问题, 要改成 app.attr -->
+  <!- 若 v-model 直接写 app 会产生问题, 要改成 app.attr 或者 data[index] -->
   <input v-for="(app,index) in data" v-model="app"></input>
+```
+
+* v-model 指令详解
+
+```bash
+  # v-model="searchText" 相当于
+  # 1. v-bind:value="searchText" v-on:input="searchText = $event.target.value
+```
+
+```js
+  // v-for 优先级比 v-if 高，在一起会影响性能，可以用 computed 代替
 ```
 
 2. 父子组件生命周期

@@ -1,4 +1,6 @@
-# cnpm install vuedraggable
+# cnpm install vuedraggable 
+
+* 目前会遇到 事件的 to 属性不指向真正的 element，暂不使用
 
 ```html
   <draggable v-model="myArray" group="people" @start="drag=true" @end="drag=false">
