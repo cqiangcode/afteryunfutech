@@ -45,4 +45,18 @@
       this.number = this.index
     }
   }
+3. 判断点击事件是左键还是右键
+
+```js
+  const mousedown = function (e) {
+    e.button === 0 || e.button === 2
+  }
+```
+
+4. html5 原生拖拽
+
+```html
+  <!-- 拖拽目标区域只有阻止 dragover 的默认事件才能触发 drop -->
+  <div class="origin" :draggable="true" @dragstart="dragstart"></div>
+  <div class="target" @drop="drop" @dragover.prevent></div>
 ```
