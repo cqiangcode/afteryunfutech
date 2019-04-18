@@ -2,14 +2,8 @@
 
 1. v-for 和 v-model 的问题
 
-* v-for中事件触发传递参数可以传递 $event 
 * v-for中指定 key 是因为虚拟 dom 的 diff 算法
-* 就地复用: 不影响渲染的组件可以直接拿来用， 加了key就不会被就地复用
-```
-  来源于 vue 的策略，如果不加key，采用就地复用
-  [1, 2, 3, 4, 5] 在第三个位置插入6,则会 3 变成 6， 4 变成 3，5 变成 4，在最后添加一个 5
-  加 key 直接插入 6
-```
+* 就地复用: vue 为了高效渲染，会把同类型的组件进行复用，加入独一无二的 key 就可以避免就地复用
 
 ```html
   <!- 若 v-model 直接写 app 会产生问题, 要改成 app.attr 或者 data[index] -->
@@ -29,12 +23,19 @@
 
 2. 父子组件生命周期
 
+```
+  beforeCreate: 组件数据和方法均未初始化
+  created: 组件数据和方法已挂载，未生成虚拟 dom
+  beforeMount: 生成虚拟 dom, 并未挂载到真正 dom 上
+  mounted: 组件已经挂载到真正的 dom 上
+```
+
 ```js
   // 父子组件生命周期执行顺序 | 初始化
   `
-    father: beforeCreate 数据,事件等未初始化
-    father: created 数据，事件等已产生，$el 未初始化
-    father: beforeMount $el 初始化，但仍未挂载
+    father: beforeCreate 
+    father: created 
+    father: beforeMount 
     son: beforeCreate
     son: created
     son: beforeMount
@@ -50,28 +51,9 @@
   `
 ```
 
-* 若在方法中执行改值操作，只有在'\<template>'标签内使用的值才可以触发组件 beforeUpdate updated
-* 注意事项 | 举例
+* vue 在渲染组件时会将关联的数据放入 Observer 中, 并持续监听数据的动态变化
 
-```js
-  // 父组件 | 若 mounted 之后改变 index 则会触发父组件 beforeUpdate updated
-  `<Son :index="index" />`
-  // 子组件 <template> 中若无 index，则不会触发子组件的 beforeUpdate updated | 如下
-  `<div>{{ number }}</div>`
-  `this.number = this.index`
-  // 上述需要手动 watch index 才可以
-  const watch = {
-    index (val) {
-      this.number = this.index
-    }
-  }
-3. 判断点击事件是左键还是右键
-
-```js
-  const mousedown = function (e) {
-    e.button === 0 || e.button === 2
-  }
-```
+3. 在鼠标相关点击事件 onmousedown, onmouseup, click 等可以通过 $event.button 来区分左右键 (0 左键 | 2 右键)
 
 4. html5 原生拖拽
 
