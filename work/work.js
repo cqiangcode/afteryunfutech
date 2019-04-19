@@ -7,7 +7,7 @@ const action = ['reason', 'trigger', 'result']
 
 function pasted(index, start, end) {
     // 先处理选取的文本不在文章中的情况
-    let selected = 'ppppppapppppppppapp'
+    let selected = 'apppppapp'
     // 寻找异色的数组及其在文章中位置
     let oppoColor = []
     let article = [
@@ -44,6 +44,7 @@ function pasted(index, start, end) {
         let { start, length, arrIndex, prop } = color
         truePosition.push(formatPosition(start, arrIndex, length, prop, article))
     })
+    truePosition.sort((a, b) => a.x - b.x)
     function findCurrentTruePosition(start, end, selected, article, prop) {
         // 算法是首位位置和start end以及对应的字符分别对应，如果长度也一致，那么基本判断位置确定
         let position = { start, prop }
@@ -80,12 +81,20 @@ function pasted(index, start, end) {
         }
         return position
     }
-    let currentColor = findCurrentTruePosition(3, 3, selected, article, action[index])
+    let currentColor = findCurrentTruePosition(0, 3, selected, article, action[index])
+    let currentPosition = {}
     {
         let { start, length, arrIndex, prop } = currentColor
-        truePosition.push(formatPosition(start, arrIndex, length, prop, article))
+        currentPosition = (formatPosition(start, arrIndex, length, prop, article))
     }
-    console.log(truePosition)
+    console.log(truePosition, currentPosition)
+    let [{ x: x1, y: y1, prop: prop1 }, { x: x2, y: y2, prop: prop2 }] = truePosition
+    let { x: cx, y: cy, prop: cprop} = currentPosition
+    if (cy <= x1 || (cx >= y1 && cy <= x2) || cx >= y2) {
+        console.log('没有交集')
+    } else {
+        console.log('有交集')
+    }
 }
 
 pasted(0)
