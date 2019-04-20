@@ -1,5 +1,20 @@
 # vue 开发过程中遇到的问题
 
+* 数据双向绑定的原理
+
+```js
+  // Object.defineProperty(原对象, 属性名, descriptor)
+  var bValue;
+  Object.defineProperty(o, 'b', {
+    get: function () {
+      return bValue
+    },
+    set: function (newValue) {
+      bValue = newValue
+    }
+  });
+```
+
 1. v-for 和 v-model 和 v-if 的问题
 
 ```js
@@ -89,4 +104,25 @@
     <h1>Hello</h1>
     <h2>World</h2>
   </template>
+```
+
+* v-if 和 v-show
+
+```
+  v-if: 更高的切换开销 | display: none
+  v-show: 更高的初始渲染开销 | visibility： hidden
+```
+
+* v-for 对于 对象
+
+```html
+  <!-- 结果按 Object.keys() 的顺序遍历 -->
+  <html v-for="(value, key, index) in object"></html>
+```
+
+* 不是响应性的数组变动
+
+```js
+  vm.items[index] = newValue
+  vm.items.length = newLength
 ```
