@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="text">
+            _value = number.toString();
+            Number对象的（基本的数字转换为Number对象，以便可以调用这个方法）toString()方法有一个可选的参数，该参数用来指定转换的基数。如果不指定这个参数，转换会以10为基数进行。然而，也可以按照其他的基数（2到36之间的数）来转换数字。
+    </div>
+    <script>
+        var text = document.getElementsByClassName("text")[0]
+        text.onmouseup = function (e) {
+            if (e.button === 2) {
+                var selection = window.getSelection()
+                var range = selection.getRangeAt(0)
+                var span = document.createElement("span")
+                console.log(range)
+                span.style.backgroundColor = "yellow"
+                range.surroundContents(span)
+            }
+        }
+    </script>
+</body>
+
+</html>
