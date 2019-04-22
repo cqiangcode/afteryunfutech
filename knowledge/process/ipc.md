@@ -62,10 +62,20 @@
     (2) 抽象命名 如下代码
   3. 绑定 socket
     服务器端:
-    int bind(int socket, const struct sockaddr *address, size_t address_len);
-      bind(socketfd, &sockaddr_un, sizeof(sockaddr_un))
+      int bind(int socket, const struct sockaddr *address, size_t address_len);
+        bind(socketfd, &sockaddr_un, sizeof(sockaddr_un))
     客户端:
-        
+    
+  4. 监听 socket
+    int listen(int sockfd, int backlog); // 第二个参数为相应 socket 可以排队的最大连接个数
+  5. 连接 socket
+    int connect(int sockfd, const struct  sockaddr *addr, socklen_t addren);
+  6. 触发 socket 连接
+    int accept(int sockfd, struct sockaddr *addr, socken_t *addrlen);
+    注意:
+      socket()生成的叫 监听socket描述字，一个服务器只有一个
+      accept()生成的叫 已连接的socket描述字，通常与客户端对应(一个客户端一个已连接的socket描述字)
+  7. 调用网络I/O读写操作 推荐 recvmsg()/sendmsg()
 ```
 ```c++
     #define SERVER_NAME @socket_server
