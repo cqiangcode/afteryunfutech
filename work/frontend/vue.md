@@ -1,5 +1,14 @@
 # vue 开发过程中遇到的问题
 
+```js
+  // vue 大致思路
+  /* 
+   *
+   *
+   * 
+   */
+```
+
 * 数据双向绑定的原理
 
 ```js
@@ -156,4 +165,20 @@
     .right
     .middle
   `
+```
+
+
+
+
+
+
+
+
+### vue 内在
+
+```js
+  // 向嵌套对象添加响应式属性
+  Vue.set(vm.someObject, 'b', 2) || this.$set(this.someObject, 'b', 2)
+  // 鉴于更新 dom 操作是有异步队列的
+  Vue.nextTick(callback) || vm.$nextTick(callback) || vm.$nextTick()  // 返回 promise 对象
 ```

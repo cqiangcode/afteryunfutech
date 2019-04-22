@@ -6,4 +6,4 @@
 
 [git-hooks](https://github.com/cqiangcode/afteryunfutech/blob/master/work/together/git-pre-receive.md)
 
-[css-module](https://github.com/cqiangcode/afteryunfutech/blob/master/work/frontend/css.md)
+[css-module](https://github.com/cqiangcode/afteryunfutech/blob/master/work/frontend/css/css.md)
