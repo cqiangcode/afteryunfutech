@@ -68,3 +68,12 @@
 }
 ```
 
+* 在鼠标相关点击事件 onmousedown, onmouseup, click 等可以通过 $event.button 来区分左右键 (0 左键 | 2 右键)
+
+* html5 原生拖拽
+
+```html
+  <!-- 拖拽目标区域只有阻止 dragover 的默认事件才能触发 drop -->
+  <div class="origin" :draggable="true" @dragstart="dragstart"></div>
+  <div class="target" @drop="drop" @dragover.prevent></div>
+```

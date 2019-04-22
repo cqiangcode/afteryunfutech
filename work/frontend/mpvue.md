@@ -19,6 +19,7 @@
   import App from './App'
   App.mptype = 'app'
   const app = new Vue(App)
+  // 手动挂载
   app.$mount()
 ```
 * app.json | 参考文档https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/app.html

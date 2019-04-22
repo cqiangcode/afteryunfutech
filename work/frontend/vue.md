@@ -22,31 +22,49 @@
   const a = [1, 2, 3]
   for (let i in a) {
     i = 5
+1. v-for 与 v-if , v-vomdel , key 的关系
+
+* v-for 与 v-if | v-for 优先级高
+```js 
+  // 推荐使用
+  const computed = {
+    isSelected： function () {
+      return this.array.filter(ele => ele > 0)
+    }
   }
-  // 改进版
-  a[index] = 5 // 或者 a[index] 为对象
 ```
-
-* v-for中指定 key 是因为虚拟 dom 的 diff 算法
-* 就地复用: vue 为了高效渲染，会把同类型的组件进行复用，加入独一无二的 key 就可以避免就地复用
+* v-for 和 v-model | v-for 为浅度克隆
 ```js
-  // 按目前的理解 就地服用是为了防止频繁操作dom而导致的 reflow 回流
+  '\<input v-for="(info, index) in array" v-model="info"></input>'
+  // 可用的解决方案
+  '\<input v-for="(info, index) in array" v-model="array[index]"></input>'
+  '\<input v-for="(info, index) in array" v-model="info.content"></input>'
 ```
-
-```html
-  <!- 若 v-model 直接写 app 会产生问题, 要改成 app.attr 或者 data[index] -->
-  <input v-for="(app,index) in data" v-model="app"></input>
-```
-
-* v-model 指令详解
-
-```bash
-  # v-model="searchText" 相当于
-  # 1. v-bind:value="searchText" v-on:input="searchText = $event.target.value
-```
-
+* v-for 和 key | vue 就地复用策略
 ```js
-  // v-for 优先级比 v-if 高，在一起会影响性能，可以用 computed 代替
+  // 简单的 v-bind 实现
+  var input = document.getElementsByClassName('input')
+  var vm = {
+    value: [0, 1],
+    name: 'vm'
+  }
+  Array.prototype.slice.call(input, 0).forEach((input, index) => {
+    Object.defineProperty(vm.value, index, {
+      get() {
+        return input.value
+      },
+      set(newValue) {
+        input.value = newValue
+      }
+    })
+  })
+  // 如果 v-for 循环下 input 子组件未绑定任何变量，那么就会就地复用，出现下列情况
+  // 参考链接 https://www.zhihu.com/question/61078310/answer/361261031
+  // 加了 key 就不会就地复用
+```
+* vue 的 diff 算法
+```js
+  // 将新旧虚拟 dom 进行最小化差异比对
 ```
 
 2. 父子组件生命周期
@@ -79,26 +97,13 @@
   `
 ```
 
-* vue 在渲染组件时会将关联的数据放入 Observer 中, 并持续监听数据的动态变化
-
-3. 在鼠标相关点击事件 onmousedown, onmouseup, click 等可以通过 $event.button 来区分左右键 (0 左键 | 2 右键)
-
-4. html5 原生拖拽
-
-```html
-  <!-- 拖拽目标区域只有阻止 dragover 的默认事件才能触发 drop -->
-  <div class="origin" :draggable="true" @dragstart="dragstart"></div>
-  <div class="target" @drop="drop" @dragover.prevent></div>
-```
+3. vue 文档翻阅
 
 * 动态绑定 class 问题
-
 ```html
   <div :class="[{ active: isActive, static: isStatic }, error]"></div>
 ```
-
 * template + v-if 渲染分组
-
 ```html
   <template v-if="ok">
     <h1>Hello</h1>
@@ -125,4 +130,30 @@
 ```js
   vm.items[index] = newValue
   vm.items.length = newLength
+```
+* vue 事件修饰符 | 按键修饰符 | 系统修饰键 | 鼠标按钮修饰符
+```js
+  // 事件修饰符
+  const event = {
+    ".stop": "event.stopPropagation",
+    ".prevent" : "event.preventDefault",
+    ".once": "只触发一次"
+  }
+  // 按键修饰符
+  `
+    v-on:keyup.enter
+  `
+  // 系统修饰符
+  `
+    .ctrl
+    .alt
+    .shift
+    .meta
+  `
+  // 鼠标按键修饰符
+  `
+    .left
+    .right
+    .middle
+  `
 ```

@@ -28,4 +28,53 @@
     </script>
 </body>
 
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+
+  <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
+  <div id="app">
+    <h3>采用就地复用策略(vuejs默认情况)</h3>
+    <div  v-for='(p, i) in persons'>
+      {{p.name}}  
+      <input type="text" v-model="p.name"/>  
+      <button @click='down(i)' v-if='i != persons.length - 1'>下移</button>
+    </div>
+
+    <h3>不采用就地复用策略(设置key)</h3>
+    <div  v-for='(p, i) in persons' :key='p.id'>
+      {{p.name}}  
+      <input type="text" v-model="p.name"/>  
+      <button @click='down(i)' v-if='i != persons.length - 1'>下移</button>
+    </div>
+
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        persons: [
+            { id: 1, name: 'AJ' },
+          { id: 2, name: 'Dandan' },
+          { id: 3, name: 'Yoko' }
+        ]
+      },
+      methods: {
+        down: function(i) {
+            if (i == this.persons.length - 1) return;
+          var listClone = this.persons.slice();
+          var one = listClone[i];
+          listClone[i] = listClone[i + 1];
+          listClone[i + 1] = one;
+          this.persons = listClone;
+        }
+      }
+    });
+  </script>
+</body>
 </html>

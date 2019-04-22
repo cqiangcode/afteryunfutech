@@ -8,7 +8,7 @@
   <!-- 可编辑区域可以通过 document.execCommand 实现富文本编辑效果 -->
 ```
 
-## document.getSelection
+## document.getSelection() | window.getSelection()
 
 ```js
   document.getSelecton().getRangeAt({
