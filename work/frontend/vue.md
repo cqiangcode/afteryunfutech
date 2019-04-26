@@ -1,11 +1,11 @@
 # vue 开发过程中遇到的问题
 
 ```js
-  // vue 大致思路
-  /* 
-   *
-   *
-   * 
+  // vue 数据绑定大致思路
+  /* Observer() 将数据通过 get set 进行改造
+   * Watcher 将监听数据变化
+   * Dep 在渲染时将用到的数据的 Watcher 进行保存，并在数据改变时通知 watcher 进行重新 compile
+   * compile 根据 diff 算法生成新的 虚拟 dom
    */
 ```
 
@@ -25,13 +25,6 @@
 ```
 
 1. v-for 和 v-model 和 v-if 的问题
-
-```js
-  // v-for 为浅度克隆，所以不和 v-model 一起用
-  const a = [1, 2, 3]
-  for (let i in a) {
-    i = 5
-1. v-for 与 v-if , v-vomdel , key 的关系
 
 * v-for 与 v-if | v-for 优先级高
 ```js 

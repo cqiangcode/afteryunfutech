@@ -52,9 +52,8 @@
   WORKDIR /app # 设置下面的默认工作目录
   COPY . . # 把当前文件夹复制到 docker 内部的 /app 文件夹中
   RUN pip install -r requirements.txt && python manage.py migrate # 有一个 run 即生成一个 container 并且 commit 出新的image
-
   EXPOSE 8000
-  ENTRYPOINT ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+  ENTRYPOINT ["python", "manage.py", "runserver", "0.0.0.0:8000"]   # 0.0.0.0 可以被外部访问
   # run 可以有多个， CMD 只能有一个
 ```
 

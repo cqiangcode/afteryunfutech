@@ -1,4 +1,4 @@
-
+// 利用 window.getSelection() 实现 多颜色的文本显示功能 demo
 
 const copy = 'appppppapppppapppppppappppppppapppppppppapppppppppp'
 const artice = [{ content: 'apppppppppp', type: 'plain' }]
