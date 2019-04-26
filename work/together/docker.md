@@ -44,7 +44,7 @@
   node_modules
 ```
 
-* Dockerfile 文件
+* Dockerfile 文件 | ENV 镜像构建过程中设置环境变量
 
 ```bash
   # 从 old image 到 new image 的文件
@@ -63,3 +63,31 @@
     。。。未完待续
 ```
 
+## 公司基础 docker 的搭建(遇坑)过程
+
+1. alpine 是一个轻量级的 docker 操作系统
+```
+  apk 是其包管理工具 类似于 ubuntu 使用的 apt apt-get
+  apk 源设置文件 /etc/apk/repositories 
+  apk update 设置 apk 的源后执行拉取对应软件源列表 /var/cache/apk
+  apk 参数:
+    缓存位置 /etc/apk/cache
+    --no-cache 不把安装包下载到本地
+    --virtual .build-deps 指定安装依赖 依赖安装完可以通过 apk del .build-deps 删除
+  pip 源设置文件： ~/.pip/pip.conf
+  pip 参数:
+    缓存位置 ~/.cache/pip
+    --no-cache-dir 不加缓存
+```
+2. COPY RUN ADD 均会向镜像中添加新层，类似于 git commit | 所以添加使用再删除要在一条命令中
+
+3. docker 中运行的服务需要绑定 0.0.0.0 才可以被外部访问
+
+4. 目前公司前端项目在外部打包，只将生成的 dist 目录导入 docker
+
+5. docker logs [container name] 查看从启动开始的容器日志
+
+6. --link=mysql_server:db | mysql_server 容器名称 | db 别名 会改变本地 /etc/hosts
+```
+  --link 会使子容器自动获得父容器的所有环境变量
+```

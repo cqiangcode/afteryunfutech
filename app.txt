@@ -7,3 +7,10 @@
     加载界面 加 loading
     
   前端规范 通用组件 选型 颜色 统一使用
+
+
+
+项目 CI/CD
+
+.gitlab.ci 实现 docker 的自动更新
+docker 封装基础镜像和 项目级镜像
