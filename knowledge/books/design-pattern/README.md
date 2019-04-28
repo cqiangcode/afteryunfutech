@@ -1,5 +1,7 @@
 # javascript 设计模式
 
+## 1. 基本概念 | 2. 基本技巧 | 3. 字面量和构造函数 | 4. 函数 | 5. 对象创建模式 | 6. 完美继承 | 7. 设计模式 | 8. DOM操作和脚本载入策略
+
 ## 基本技巧 | a = 2; 会挂载到全局对象, var a = 2; 则不会
 
 1. 尽量少使用全局变量
@@ -120,6 +122,19 @@
 ```
 
 ## 设计模式
+
+* 模式简介
+```js
+  /* 
+   * 1. 工厂模式: 给一造一
+   * 2. 迭代器模式: 可以遍历数组建立对象
+   * 3. 装饰者模式: 给定 list 动态添加方法
+   * 4. 外观模式: 针对兼容给出统一接口
+   * 5. 代理模式: ajax 点击添加进数组，500ms后不点击再统一发 ajax 请求
+   * 6. 中介者模式: 对象之间通过中介者进行通信
+   * 7. 观察者模式: 将事件通告给所有观察者
+   */
+```
 
 1. 工厂模式
 ```js
@@ -374,4 +389,69 @@
   paper.monthly();
 ```
 
-9. 178 截止
+## dom 操作
+
+* 活用 fragment 文档碎片
+```js
+  var p, t, frag;
+  frag = document.createDocumentFragment();
+  p = document.createElement('p');
+  t = document.createTextNode('first paragraph');
+  p.appendChild(t);
+  frag.appendChild(p);
+  p = document.createElement('p');
+  t = document.createTextNode('second paragraph');
+  p.appendChild(t);
+  frag.appendChild(p);
+  // 将文档碎片插入 dom 
+  document.body.appendChild(frag);
+```
+* Web Workers
+```js
+  var ww = new Worker('my_web_worker.js');
+  ww.onmessage = function (event) {
+    document.body.innerHTML += "<p>message from the background thread: " + event.data + "</p>";
+  }
+  // my_web_worker.js
+  postMessage('hello there');
+```
+* 性能上考虑
+```
+  1. 合并 js 文件
+  2. 精简和压缩 js 文件
+  3. Expires 设置本地缓存 | cache-control: max-age
+  4. 使用 CDN
+  5. defer 异步下载完，元素解析完成执行，按顺序 | async 异步下载完立即执行，无顺序
+```
+* js 文件的延迟加载，按需加载，预加载
+```js
+  // 按需加载 | 在 script 标签中
+  window.onload = function () {
+    var script = document.createElement("script");
+    script.src = "all_lazy_20100426.js";
+    document.documentElement.firstChild.appendChild(script);
+  }
+  // 按需加载
+  requrie("extra.js", function () {
+    functionDefinedInExtraJS();
+  })
+  function requrire(file, callback) {
+    var script = document.getElementsByTagName('script')[0],
+        newjs = document.createElement('script');
+    newjs.onload = function () {
+      callback();
+    }
+    newjs.src = file;
+    script.parentNode.insertBefore(newjs, script);
+  }
+  // 预加载
+  var preload;
+  preload = function (file) {
+    var obj = document.createElement('object'),
+        body = document.body;
+    obj.width = 0;
+    obj.height = 0;
+    obj.data = file;
+    body.appendChild(obj);
+  }
+```

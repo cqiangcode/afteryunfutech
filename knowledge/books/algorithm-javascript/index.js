@@ -1,102 +1,151 @@
-// 列表
-
-/*
- * 栈的应用
- */
-
-// Stack 类模拟
-function Stack () {
-    this.dataStore = [];
-    this.top = 0;
-    this.pop = pop;
-    this.push = push;
-    this.peek = peek;
-    this.clear = clear;
-    this.length = length;
+// 练习 2.9
+// 1.
+function Student(name) {
+  this.name = name
+  this.scores = {}
 }
-function push (element) {
-    this.dataStore[this.top++] = element;
-}
-function peek () {
-    return this.dataStore[this.top - 1];
-}
-function pop () {
-    return this.dataStore[--this.top];
-}
-function clear () {
-    this.top = 0;
-}
-function length () {
-    return this.top;
-}
-// 栈模拟递归
-function factorial (n) {
-    var s = new Stack();
-    for (; n > 1; n --) {
-        s.push(n);
+Student.prototype.addScore = function(object) {
+  for (var subject in object) {
+    if (object.hasOwnProperty(subject)) {
+      this.scores[subject] = object[subject]
     }
-    var product = 1;
-    while (s.length() > 0) {
-        product *= s.pop();
-    }
-    return product;
+  }
+  return this
 }
-// 括号匹配
-function isStandard (express) {
-    let s = new Stack();
-    express.split('').forEach((ele) => {
-        if (ele === '(') {
-            s.push('(');
-        } else if (ele === ')') {
-            if (!s.length()) {
-                return '表达式不合格';
-            }
-            s.pop();
-        }
-    })
-    if (s.length()) {
-        return '表达式不合格';
+Student.prototype.consoleAvgScore = function() {
+  let sum = 0,
+    scores = this.scores,
+    i = 0
+  for (var subject in scores) {
+    if (scores.hasOwnProperty(subject)) {
+      sum += scores[subject]
+      i++
+    }
+  }
+  return sum / i
+}
+console.log(
+  new Student('xiaoming').addScore({ math: 90, english: 70 }).consoleAvgScore()
+)
+// 2.
+function save(...arr) {
+  return arr
+}
+function consoleArr(arr) {
+  arr.forEach(ele => console.log(ele))
+  return arr
+}
+function consoleReverse(arr) {
+  arr.reverse().forEach(ele => console.log(ele))
+  return arr
+}
+consoleReverse(consoleArr(save('xiaobai', 'xiaohong', 'xiaolv', 'xiaozi')))
+// 练习 3.5
+// 1.
+function insertLarger(n, i, arr) {
+  if (!arr.filter(ele => ele > n).length) {
+    arr.splice(i, 1, n)
+  }
+}
+// 2.
+function Person(name, sex) {
+  this.name = name
+  this.sex = sex
+}
+const persons = []
+for (let i = 0; i < 10; i++) {
+  persons.push(
+    new Person(i < 5 ? 'xiaoqiang' : 'xiaoming', i < 4 ? 'male' : 'female')
+  )
+}
+function selectSameSex(persons) {
+  let sameSex = {}
+  persons.forEach(person => {
+    if (sameSex[person.sex]) {
+      sameSex[person.sex].push(person.name)
     } else {
-        return '表达式合乎规范';
+      sameSex[person.sex] = [person.name]
     }
+  })
+  return sameSex
 }
-// 后缀表达式转中缀并求值 有空再写
-// function endToMiddle (express) {
-//     const operater = new Stack();
-//     const temp = new Stack();
-//     express.split(' ').forEach((ele) => {
-//         let parse = parseInt(ele);
-//         if (String(parse) !== 'NaN') {
-//             temp.push(ele);
-//         } else {
-//             if (!operater.length() || operater.peek() === '(') {
-//                 operater.push(ele);
-//             } else if () {
+selectSameSex(persons)
 
-//             } else 
-//         }
-//     })
-// }
+// 优先级队列
+function Patient(name, code) {
+  this.name = name
+  this.code = code // 1-10 | 10 优先级最高
+}
+let patients = []
+function insertQueue(patient, patients) {
+  let i = patients.findIndex(ele => ele.code < patient.code)
+  if (i === -1) {
+    patients.push(patient)
+  } else {
+    patients.splice(i, 0, patient)
+  }
+}
+for (let i = 0; i < 10; i++) {
+  insertQueue(
+    new Patient('xiaoli', Math.floor(Math.random() * 10) + 1),
+    patients
+  )
+}
+console.log(patients)
 
-// 队列模拟
-function Queue () {
-    this.dataStore = [];
-    this.enqueue = enqueue;
-    this.dequeue = dequeue;
-    this.front = front;
-    this.back = back;
-    this.toString = toString;
-    this.empty = empty; 
+// 练习 6.7
+// 循环列表 | 约瑟夫环
+function Node(value) {
+  this.value = value
+  this.next = null
 }
-function enqueue (element) {
-    this.dataStore.push(element);
+let start = new Node(0);
+// 删除节点 | 如果删除的是 start 那么 start 指向 start.next | 让 被删除元素的前者指向其后者
+Node.prototype.kill = function() {
+  let temp = this.next
+  let p = start
+  while (p.next !== this) {
+    p = p.next
+  }
+  if (start === this) {
+    start = start.next
+  }
+  p.next = temp
 }
-function dequeue () {
-    return this.dataStore.shift();
+for (let i = 1; i < 41; i++) {
+  let p = new Node(i),
+    temp = start
+  while (temp.value !== i - 1) {
+    temp = temp.next
+  }
+  temp.next = p
+  if (i === 40) {
+    p.next = start
+  }
 }
-function front () {
-    return this.dataStore[0];
+let p = start,
+  count = 1
+while (p.next.next !== p) {
+  if (count % 3 === 0) {
+    let temp = p.next;
+    p.kill();
+    p = temp;
+    count = 1
+  } else {
+    count++
+    p = p.next;
+  }
 }
-function back () {
-    return this.dataStore[this.dataStore.length - 1];
+
+// 7.4 练习
+function splitWord(words) {
+  let result = {};
+  words.trim().split(' ').forEach(word => {
+      if (result[word]) {
+          result[word] ++;
+      } else {
+          result[word] = 1;
+      }
+  });
+  return result;
 }
