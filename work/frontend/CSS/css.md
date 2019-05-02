@@ -68,7 +68,7 @@
 }
 ```
 
-* 在鼠标相关点击事件 onmousedown, onmouseup, click 等可以通过 $event.button 来区分左右键 (0 左键 | 2 右键)
+* 在鼠标相关点击事件 onmousedown, onmouseup 等可以通过 $event.button 来区分左右键 (0 左键 | 2 右键)
 
 * html5 原生拖拽
 

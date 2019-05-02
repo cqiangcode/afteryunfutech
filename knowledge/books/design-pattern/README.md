@@ -9,6 +9,10 @@
 2. for in 循环遍历对象 | for of 循环遍历数组 | 只遍历 可枚举 属性 | 可以通过 Object.hasOwnProperty() 过滤原型上 可枚举 变量
 
 3. parseInt(string, radix) | string 以 radix 为基数
+```js
+  parseInt('23', 1) // NaN
+  parseInt('23', 8) // 2 * 8 + 3 = 16
+```
 
 4. 原型   对象.__proto__ = 构造函数.prototype
 ```js
@@ -17,7 +21,7 @@
   a.__proto__ == app.prototype; //  值为: constructor: function app() {}, __proto__: Object.prototype
   app.__proto__ == Function.prototype; // true
   Function.__proto__ == Function.prototype; // true
-  // 构造函数才有 prototype
+  // 构造函数才有 prototype | 函数名.prototype 无 prototype 属性
 ```
 
 5. 检查变量是否为数组
@@ -127,8 +131,8 @@
 ```js
   /* 
    * 1. 工厂模式: 给一造一
-   * 2. 迭代器模式: 可以遍历数组建立对象
-   * 3. 装饰者模式: 给定 list 动态添加方法
+   * 2. 迭代器模式: next() 可以遍历数组建立对象
+   * 3. 装饰者模式: 给定 list 动态添加方法 [...decorates] 前者的返回值给后者当参数
    * 4. 外观模式: 针对兼容给出统一接口
    * 5. 代理模式: ajax 点击添加进数组，500ms后不点击再统一发 ajax 请求
    * 6. 中介者模式: 对象之间通过中介者进行通信

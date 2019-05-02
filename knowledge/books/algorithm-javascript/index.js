@@ -4,6 +4,7 @@ function Student(name) {
   this.name = name
   this.scores = {}
 }
+// 共有的方法可以直接定义在原型上，通过 this 指针拿到本对象的数据
 Student.prototype.addScore = function (object) {
   for (var subject in object) {
     if (object.hasOwnProperty(subject)) {
@@ -27,7 +28,7 @@ Student.prototype.consoleAvgScore = function () {
 console.log(
   new Student('xiaoming').addScore({ math: 90, english: 70 }).consoleAvgScore()
 )
-// 2.
+// 2. 数组的正序，倒序遍历
 function save(...arr) {
   return arr
 }
@@ -47,7 +48,7 @@ function insertLarger(n, i, arr) {
     arr.splice(i, 1, n)
   }
 }
-// 2.
+// 2. 
 function Person(name, sex) {
   this.name = name
   this.sex = sex
@@ -71,7 +72,7 @@ function selectSameSex(persons) {
 }
 selectSameSex(persons)
 
-// 优先级队列
+// 优先级队列 | 医院排队，病人也分优先级
 function Patient(name, code) {
   this.name = name
   this.code = code // 1-10 | 10 优先级最高
@@ -138,6 +139,7 @@ while (p.next.next !== p) {
 }
 
 // 7.4 练习
+// 利用对象统计各个单词出现的次数
 function splitWord(words) {
   let result = {};
   words.trim().split(' ').forEach(word => {

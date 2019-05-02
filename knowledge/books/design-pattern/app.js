@@ -93,3 +93,9 @@ window.onkeypress = game.handleKeypress
  * 2. play 方法注册在 game 对象, 修改 points, 触发 scorechange 事件
  * 3. scoreboard 修改 dom 中对应元素
  */
+
+/* 其实观察者模式，或者说发布/订阅模式就是涉及自身数据的变化
+ * 首先会将自身注册为发布者
+ * 然后将对数据关心的对象方法写入对应的事件队列中
+ * 事件触发，调用自身的方法通知事件队列中的方法
+ */
