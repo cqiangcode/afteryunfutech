@@ -4,7 +4,7 @@ function Student(name) {
   this.name = name
   this.scores = {}
 }
-Student.prototype.addScore = function(object) {
+Student.prototype.addScore = function (object) {
   for (var subject in object) {
     if (object.hasOwnProperty(subject)) {
       this.scores[subject] = object[subject]
@@ -12,7 +12,7 @@ Student.prototype.addScore = function(object) {
   }
   return this
 }
-Student.prototype.consoleAvgScore = function() {
+Student.prototype.consoleAvgScore = function () {
   let sum = 0,
     scores = this.scores,
     i = 0
@@ -101,7 +101,7 @@ function Node(value) {
 }
 let start = new Node(0);
 // 删除节点 | 如果删除的是 start 那么 start 指向 start.next | 让 被删除元素的前者指向其后者
-Node.prototype.kill = function() {
+Node.prototype.kill = function () {
   let temp = this.next
   let p = start
   while (p.next !== this) {
@@ -141,11 +141,40 @@ while (p.next.next !== p) {
 function splitWord(words) {
   let result = {};
   words.trim().split(' ').forEach(word => {
-      if (result[word]) {
-          result[word] ++;
-      } else {
-          result[word] = 1;
-      }
+    if (result[word]) {
+      result[word]++;
+    } else {
+      result[word] = 1;
+    }
   });
   return result;
 }
+
+// 散列
+function HashTable() {
+  this.table = new Array(137)
+  this.simpleHash = simpleHash
+  this.showDistro = showDistro
+  this.put = put
+  //  this.get = get;
+}
+function put(data) {
+  var pos = this.simpleHash(data)
+  this.table[pos] = data
+}
+// data 中所有字符编码进行相加
+function simpleHash(data) {
+  var total = 0
+  for (var i = 0; i < data.length; ++i) {
+    total += data.charCodeAt(i)
+  }
+  return total % this.table.length
+}
+function showDistro() {
+  for (var i = 0; i < this.table.length; i++) {
+    if (this.table[i] != undefined) {
+      print(i + ': ' + this.table[i])
+    }
+  }
+}
+
