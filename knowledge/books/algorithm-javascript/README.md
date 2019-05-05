@@ -93,4 +93,20 @@ for (let i = 0; i < 10; i++) {
 
 ## 散列
 
-* 散列数组的长度最好为质数 | 为了数组均匀分布
+- 散列数组的长度最好为质数 | 为了数组均匀分布
+
+```js
+// 霍纳算法有利于数据的散列结果排布
+function betterHash(string) {
+  const H = 37
+  var total = 0
+  for (var i = 0; i < string.length; i++) {
+    total += H * total + string.charCodeAt(i)
+  }
+  total = total % this.table.length
+  if (total < 0) {
+    total += this.table.length - 1
+  }
+  return parseInt(total)
+}
+```
