@@ -9,7 +9,8 @@
 # print(df[:, 1])
 
 import pandas as pd
-
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
 df = pd.read_csv('./Apt1_2015.csv')
 front = 0
 cycle = 0
@@ -27,4 +28,9 @@ for value in df.values:
         cycle = 0
     else:
         cycle = cycle + value[1]
-df = pd.DataFrame(power)
+print(len(power))
+del power[len(power) - 1]
+# df = pd.DataFrame(power)
+estimator = KMeans(n_clusters=2)#构造聚类器
+estimator.fit(power)
+print(type(estimator.labels_))
