@@ -3,11 +3,25 @@
 ## docker 基本命令
 
 ```bash
+  # 常用命令
+  docker images # 查看 image
+  docker build -t name:tag . # . 为所使用的 dockerfile 所在目录
+  docker run [image Name] # 
+  docker run -p 8000:3000 -it --name [container-name]:[tag-name] [image-name]:[tag-name] /bin/bash
+  docker exec -it [container name] /bin/bash # 进入相关的 docker 进程
+  docker ps -a # 列出所有正在运行的容器
+  docker stop [container name] # 停止正在运行的容器
+  docker start [container name] # 运行容器
+  docker rm [container name] # 删除容器
+  docker image rm [image name] # 删除镜像
+```
+
+```bash
   # 启动 docker 服务
   $ sudo server docker start
   $ sudo systemctl start docker
   # image 相关
-  $ docker image ls
+  $ docker images
   $ docker image rm [imageName]
   $ docker image pull hello-world # 默认的 docker hub 的 library 目录下
   # container 相关
@@ -40,6 +54,7 @@
 
 ```bash
   # 目录下新建 .dockerignore 文件, 写进去不打包进 image 的文件
+  # 与 .gitignore 基本相同, 可包括正则式等等
   .git
   node_modules
 ```

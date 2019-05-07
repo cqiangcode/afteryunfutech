@@ -27,7 +27,7 @@ do
   if [[ $oldVersion != $EMPTY_REF && $newVersion != $EMPTY_REF ]]; then
     mkdir -p $(dirname $TMP_DIR/$ESFILE)
     git show ${newVersion}:${ESFILE} > $TMP_DIR/$ESFILE
-    # awk 很简单的处理列表数据的命令
+    # awk 简单的处理列表数据的命令
     for line in $(git diff --name-status $oldVersion $newVersion | grep -oP '.*\.(py|js|vue)' | awk '{print $1$2}')
       do
         status=$(echo $line | grep -o '^.')
@@ -96,7 +96,7 @@ exit 1
 ## .gitignore 添加问题
 
 ```bash
-  # 若非第一次提交才添加 .gitignore 可以用以下命令清除缓存区
+  # 若非第一次提交才添加 .gitignore, 可以用以下命令清除缓存区
   git rm -r --cached filename/directory
 ```
 

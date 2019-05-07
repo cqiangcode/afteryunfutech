@@ -22,6 +22,7 @@
       bValue = newValue
     }
   });
+  // bValue 类比于所绑定的 dom 的值
 ```
 
 1. v-for 和 v-model 和 v-if 的问题
